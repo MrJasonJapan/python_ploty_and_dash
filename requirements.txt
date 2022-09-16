@@ -1,3 +1,4 @@
+# If you are using Python 3.9 or higher, use this for reference only and just install python packages manually as you proceed through the course.
 chardet==3.0.4
 click==6.7
 Cython==0.28.2
