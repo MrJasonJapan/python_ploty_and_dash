@@ -6,24 +6,26 @@
 ######
 
 # Perform imports here:
+import plotly.offline as pyo
+import plotly.graph_objs as go
+import pandas as pd
 
-
-
-
-# create a DataFrame from the .csv file:
+# create a DataFrame from the .csv file, and set the index to the first column:
+df = pd.read_csv('../data/mocksurvey.csv', index_col=0)
+print(df)
 
 
 # create traces using a list comprehension:
+# data = [go.Bar(x=df.index, y=df[col], name=col) for col in df.columns]
+
+# create traces using a list comprehension, and make the bars horizontal:
+data = [go.Bar(y=df.index, x=df[col], name=col, orientation='h') for col in df.columns]
 
 
+# create a layout in stack mode
+layout = go.Layout(title='Mock Survey Results', barmode='stack')
 
 
-
-
-# create a layout, remember to set the barmode here
-
-
-
-
-
-# create a fig from data & layout, and plot the fig.
+# Create a fig from data & layout:
+fig = go.Figure(data=data, layout=layout)
+pyo.plot(fig, filename='Ex3-BarChart.html')
