@@ -9,7 +9,7 @@ df = pd.read_csv('../data/mpg.csv')
 
 data = [go.Histogram(
     x=df['mpg'],
-    xbins=dict(start=8,end=50,size=6),
+    xbins=dict(start=8, end=50, size=6),
 )]
 
 layout = go.Layout(
