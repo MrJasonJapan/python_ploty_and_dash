@@ -6,6 +6,9 @@ import plotly.graph_objs as go
 import pandas as pd
 
 df = pd.read_csv('../data/2010YumaAZ.csv')
+print(df.shape)
+print(df.head())
+print(df.columns)
 
 data = [go.Heatmap(
     x=df['DAY'],
