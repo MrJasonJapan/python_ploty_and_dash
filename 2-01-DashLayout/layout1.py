@@ -6,8 +6,8 @@ import dash_html_components as html
 app = dash.Dash()
 
 app.layout = html.Div(children=[
-    html.H1(children='Hello Dash'),
-    html.Div(children='Dash: A web application framework for Python.'),
+    html.H1('Hello Dash'),
+    html.Div('Dash: A web application framework for Python.'),
 
     dcc.Graph(
         id='example-graph',
