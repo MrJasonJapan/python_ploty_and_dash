@@ -7,6 +7,7 @@ import plotly.figure_factory as ff
 import numpy as np
 
 x = np.random.randn(1000)
+print(x)
 hist_data = [x]
 group_labels = ['distplot']
 
