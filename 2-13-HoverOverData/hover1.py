@@ -8,7 +8,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 import plotly.graph_objs as go
 import pandas as pd
-import json
+import json  # used in conjuction with the hoverData component.
 
 app = dash.Dash()
 
@@ -16,41 +16,46 @@ df = pd.read_csv('../data/wheels.csv')
 
 app.layout = html.Div([
     html.Div([
-    dcc.Graph(
-        id='wheels-plot',
-        figure={
-            'data': [
-                go.Scatter(
-                    x = df['color'],
-                    y = df['wheels'],
-                    dy = 1,
-                    mode = 'markers',
-                    marker = {
-                        'size': 12,
-                        'color': 'rgb(51,204,153)',
-                        'line': {'width': 2}
+        dcc.Graph(
+            id='wheels-plot',
+            figure={
+                'data': [
+                    go.Scatter(
+                        x=df['color'],
+                        y=df['wheels'],
+                        dy=1,  # dy is for spacing on the y-axis.
+                        mode='markers',
+                        marker={
+                            'size': 12,
+                            'color': 'rgb(51,204,153)',
+                            'line': {'width': 2}
                         }
+                    )
+                ],
+                'layout': go.Layout(
+                    title='Wheels & Colors Scatterplot',
+                    xaxis={'title': 'Color'},
+                    yaxis={'title': '# of Wheels', 'nticks': 3},
+                    hovermode='closest'
                 )
-            ],
-            'layout': go.Layout(
-                title = 'Wheels & Colors Scatterplot',
-                xaxis = {'title': 'Color'},
-                yaxis = {'title': '# of Wheels','nticks':3},
-                hovermode='closest'
-            )
-        }
-    )], style={'width':'30%', 'float':'left'}),
+            }
+        )], style={'width': '30%', 'float': 'left'}),
 
     html.Div([
-    html.Pre(id='hover-data', style={'paddingTop':35})
-    ], style={'width':'30%'})
+        # Pre stands for preformatted text. Div or H1 would also work. But Pre works nice for displaying JSON and simple text.
+        html.Pre(id='hover-data', style={'paddingTop': 35})
+    ], style={'width': '30%'})
 ])
+
 
 @app.callback(
     Output('hover-data', 'children'),
+    # notice hoverDate here. Also notice how we didn't need to specity hoverData anywhere inside the graph because it is already available.
     [Input('wheels-plot', 'hoverData')])
 def callback_image(hoverData):
+    # json.dumps() converts the hoverData object to a JSON string.
     return json.dumps(hoverData, indent=2)
+
 
 if __name__ == '__main__':
     app.run_server()
