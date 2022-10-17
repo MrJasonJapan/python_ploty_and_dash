@@ -6,6 +6,11 @@ import plotly.graph_objs as go
 import pandas as pd
 
 df = pd.read_csv('../data/gapminderDataFiveYear.csv')
+# print the df's shape, size, columns, and head
+print(df.shape)
+print(df.size)
+print(df.columns)
+print(df.head())
 
 app = dash.Dash()
 
@@ -14,12 +19,13 @@ app = dash.Dash()
 # We need to construct a dictionary of dropdown values for the years
 year_options = []
 for year in df['year'].unique():
-    year_options.append({'label':str(year),'value':year})
+    year_options.append({'label': str(year), 'value': year})
 
 app.layout = html.Div([
     dcc.Graph(id='graph'),
-    dcc.Dropdown(id='year-picker',options=year_options,value=df['year'].min())
+    dcc.Dropdown(id='year-picker', options=, value=df['year'].min())
 ])
+
 
 @app.callback(Output('graph', 'figure'),
               [Input('year-picker', 'value')])
@@ -41,11 +47,12 @@ def update_figure(selected_year):
     return {
         'data': traces,
         'layout': go.Layout(
-            xaxis={'type': 'log', 'title': 'GDP Per Capita'},
+            xaxis={'type': 'log', 'title': 'GDP Per Capita'},  # notice the log type here.
             yaxis={'title': 'Life Expectancy'},
             hovermode='closest'
         )
     }
+
 
 if __name__ == '__main__':
     app.run_server()
