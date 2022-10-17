@@ -18,7 +18,7 @@ app.layout = html.Div([
             {'label': 'Montréal', 'value': 'MTL'},
             {'label': 'San Francisco', 'value': 'SF'}
         ],
-        value='MTL'
+        value='MTL'  # default value
     ),
 
     html.Label('Multi-Select Dropdown'),
@@ -28,20 +28,20 @@ app.layout = html.Div([
             {'label': u'Montréal', 'value': 'MTL'},
             {'label': 'San Francisco', 'value': 'SF'}
         ],
-        value=['MTL', 'SF'],
+        value=['MTL', 'SF'],  # default values
         multi=True
     ),
 
     # SLIDER https://dash.plot.ly/dash-core-components/slider
     html.Label('Slider'),
     html.P(
-    dcc.Slider(
-        min=-5,
-        max=10,
-        step=0.5,
-        marks={i: i for i in range(-5,11)},
-        value=-3
-    )),
+        dcc.Slider(
+            min=-5,
+            max=10,
+            step=0.5,
+            marks={i: i for i in range(-5, 11)},  # dictionary comprehension
+            value=-3  # default value
+        )),
 
     # RADIO ITEMS https://dash.plot.ly/dash-core-components/radioitems
     html.Label('Radio Items'),
@@ -51,7 +51,7 @@ app.layout = html.Div([
             {'label': 'Montréal', 'value': 'MTL'},
             {'label': 'San Francisco', 'value': 'SF'}
         ],
-        value='MTL'
+        value='MTL'  # default value
     )
 ], style={'width': '50%'})
 
