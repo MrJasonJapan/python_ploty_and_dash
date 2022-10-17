@@ -7,15 +7,19 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 import pandas as pd
-import base64
+import base64  # working with images (in this case for encoding an image and displaying it inside an image tag)
 
 app = dash.Dash()
 
 df = pd.read_csv('../data/wheels.csv')
 
+# encode binary image to base64 string so the browser can display it
+
+
 def encode_image(image_file):
     encoded = base64.b64encode(open(image_file, 'rb').read())
     return 'data:image/png;base64,{}'.format(encoded.decode())
+
 
 app.layout = html.Div([
     dcc.RadioItems(
@@ -32,8 +36,9 @@ app.layout = html.Div([
         value='blue'
     ),
     html.Div(id='colors-output'),
-    html.Img(id='display-image', src='children', height=300)
-], style={'fontFamily':'helvetica', 'fontSize':18})
+    html.Img(id='display-image', src='', height=300)
+], style={'fontFamily': 'helvetica', 'fontSize': 18})
+
 
 @app.callback(
     Output('wheels-output', 'children'),
@@ -41,20 +46,23 @@ app.layout = html.Div([
 def callback_a(wheels_value):
     return 'You\'ve selected "{}"'.format(wheels_value)
 
+
 @app.callback(
     Output('colors-output', 'children'),
     [Input('colors', 'value')])
 def callback_b(colors_value):
     return 'You\'ve selected "{}"'.format(colors_value)
 
+
+# callback for returning the correct image path based on the selected radio items.
 @app.callback(
-    Output('display-image', 'src'),
+    Output('display-image', 'src'),  # note the output attribute is set to 'src' here.
     [Input('wheels', 'value'),
      Input('colors', 'value')])
 def callback_image(wheel, color):
     path = '../data/images/'
-    return encode_image(path+df[(df['wheels']==wheel) & \
-    (df['color']==color)]['image'].values[0])
+    return encode_image(path+df[(df['wheels'] == wheel) & (df['color'] == color)]['image'].values[0])
+
 
 if __name__ == '__main__':
     app.run_server()

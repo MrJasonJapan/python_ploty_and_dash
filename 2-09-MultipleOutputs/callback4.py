@@ -11,6 +11,10 @@ import pandas as pd
 app = dash.Dash()
 
 df = pd.read_csv('../data/wheels.csv')
+# print the df's shape, size, columns, and head()
+print('df.shape: ', df.shape, 'df.size: ', df.size, sep=' ')
+print('df.columns: ', df.columns)
+print(df.head())
 
 app.layout = html.Div([
     dcc.RadioItems(
@@ -18,16 +22,20 @@ app.layout = html.Div([
         options=[{'label': i, 'value': i} for i in df['wheels'].unique()],
         value=1
     ),
+
     html.Div(id='wheels-output'),
 
     html.Hr(),  # add a horizontal rule
+
     dcc.RadioItems(
         id='colors',
         options=[{'label': i, 'value': i} for i in df['color'].unique()],
         value='blue'
     ),
+
     html.Div(id='colors-output')
-], style={'fontFamily':'helvetica', 'fontSize':18})
+], style={'fontFamily': 'helvetica', 'fontSize': 18})
+
 
 @app.callback(
     Output('wheels-output', 'children'),
@@ -35,11 +43,13 @@ app.layout = html.Div([
 def callback_a(wheels_value):
     return 'You\'ve selected "{}"'.format(wheels_value)
 
+
 @app.callback(
     Output('colors-output', 'children'),
     [Input('colors', 'value')])
 def callback_b(colors_value):
     return 'You\'ve selected "{}"'.format(colors_value)
+
 
 if __name__ == '__main__':
     app.run_server()
