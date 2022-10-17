@@ -17,16 +17,16 @@ app.layout = html.Div([
         id='mpg_scatter',
         figure={
             'data': [go.Scatter(
-                x = df['model_year']+1900,  # UN-JITTERED data
-                y = df['mpg'],
-                text = df['name'],
-                hoverinfo = 'text',
-                mode = 'markers'
+                x=df['model_year']+1900,  # UN-JITTERED data
+                y=df['mpg'],
+                text=df['name'],
+                hoverinfo='text',
+                mode='markers'
             )],
             'layout': go.Layout(
-                title = 'mpg.csv dataset',
-                xaxis = {'title': 'model year'},
-                yaxis = {'title': 'miles per gallon'},
+                title='mpg.csv dataset',
+                xaxis={'title': 'model year'},
+                yaxis={'title': 'miles per gallon'},
                 hovermode='closest'
             )
         }
