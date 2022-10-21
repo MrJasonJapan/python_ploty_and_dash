@@ -18,10 +18,6 @@ app = dash.Dash()
 
 app.layout = html.Div([
     html.Div([
-        html.Iframe(src = 'https://www.flightradar24.com', height = 500, width = 1200)
-    ]),
-
-    html.Div([
     html.Pre('Active flights worldwide: {}'.format(counter))
     ])
 ])

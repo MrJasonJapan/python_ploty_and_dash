@@ -15,22 +15,23 @@ app = dash.Dash()
 
 app.layout = html.Div([
     html.Div([
-        html.Iframe(src = 'https://www.flightradar24.com', height = 500, width = 1200)
-    ]),
+        html.Pre(
+            id='counter_text',
+            children='Active flights worldwide:'
+        ),
 
-    html.Div([
-    html.Pre(
-        id='counter_text',
-        children='Active flights worldwide:'
-    ),
-    dcc.Graph(id='live-update-graph',style={'width':1200}),
-    dcc.Interval(
-        id='interval-component',
-        interval=6000, # 6000 milliseconds = 6 seconds
-        n_intervals=0
-    )])
+        dcc.Graph(id='live-update-graph', style={'width': 1200}),
+
+        dcc.Interval(
+            id='interval-component',
+            interval=6000,  # 6000 milliseconds = 6 seconds
+            n_intervals=0
+        )])
 ])
+
+# global variable for list of points we save for the plotting into the graph
 counter_list = []
+
 
 @app.callback(Output('counter_text', 'children'),
               [Input('interval-component', 'n_intervals')])
@@ -46,16 +47,18 @@ def update_layout(n):
     counter_list.append(counter)
     return 'Active flights worldwide: {}'.format(counter)
 
-@app.callback(Output('live-update-graph','figure'),
+
+@app.callback(Output('live-update-graph', 'figure'),
               [Input('interval-component', 'n_intervals')])
 def update_graph(n):
     fig = go.Figure(
-        data = [go.Scatter(
-        x = list(range(len(counter_list))),
-        y = counter_list,
-        mode='lines+markers'
+        data=[go.Scatter(
+            x=list(range(len(counter_list))),
+            y=counter_list,
+            mode='lines+markers'
         )])
     return fig
+
 
 if __name__ == '__main__':
     app.run_server()
